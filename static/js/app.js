@@ -13,12 +13,14 @@ function init(){
         });
         var firstSample = sampleNames[0];
         metadataDisplay(firstSample);
+        plotCharts(firstSample);
         console.log(data);
     });
 }
 init();
 function optionChanged(newSample){
     metadataDisplay(newSample);
+    plotCharts(newSample);
 }
 
 function metadataDisplay(sample){
@@ -35,6 +37,62 @@ function metadataDisplay(sample){
     });
 }
 
+function plotCharts(sample){
+    d3.json(path).then((data) => {
+        var samples = data.samples;
+        var metadata = data.metadata;
+        
+        var sampleSample = samples.filter(sampleObj => sampleObj.id == sample);
+        var metadataSample = metadata.filter(sampleObj => sampleObj.id == sample);
+
+        var firstSample = sampleSample[0];
+        var firstMetadata = metadataSample[0];
+
+        var otuIDs = firstSample.otu_ids.slice(0,10);
+        var otuLabels = firstSample.otu_labels.slice(0,10);
+        var sampleValues = firstSample.sample_values.slice(0,10); 
+        var washFreq = firstMetadata.wfreq; 
+        function addOTU(number){
+            return "OTU " + number
+        }
+        
+        let yTicks = otuIDs.map(addOTU)
+
+        let barData = [{
+            type: 'bar',
+            x: sampleValues,
+            y: yTicks,
+            orientation: 'h',
+            hovertext: otuLabels
+        }];
+        let barLayout = {
+            height: 600,
+            width: 800,
+            yaxis: { autorange: 'reversed' }
+        };
+    Plotly.newPlot('bar', barData, barLayout);
+
+    var bubbleData = [{
+        x: otuIDs,
+        y: sampleValues,
+        text: otuLabels,
+        mode: "markers",
+        marker: {
+            size: sampleValues,
+            color: otuIDs,
+            colorscale: "Rainbow"
+
+        }
+    }];
+    var bubbleLayout = {
+        title: "Bacteria Cultives Per Sample",
+            xaxis: {title: "OTU Id"},
+            automargin: true,
+            hovermode: "closest"
+    };
+    Plotly.newPlot("bubble", bubbleData, bubbleLayout)
+    });
+}
 /*
 function barChart(){
   function addOTU(number){
