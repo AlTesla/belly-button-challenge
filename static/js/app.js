@@ -52,6 +52,8 @@ function plotCharts(sample){
         var otuLabels = firstSample.otu_labels.slice(0,10);
         var sampleValues = firstSample.sample_values.slice(0,10); 
         var washFreq = firstMetadata.wfreq; 
+        
+
         function addOTU(number){
             return "OTU " + number
         }
@@ -66,33 +68,39 @@ function plotCharts(sample){
             hovertext: otuLabels
         }];
         let barLayout = {
-            height: 600,
-            width: 800,
+            height: 800,
+            width: 590,
             yaxis: { autorange: 'reversed' }
         };
-    Plotly.newPlot('bar', barData, barLayout);
+        
+        Plotly.newPlot('bar', barData, barLayout);
 
-    var bubbleData = [{
-        x: otuIDs,
-        y: sampleValues,
-        text: otuLabels,
-        mode: "markers",
-        marker: {
-            size: sampleValues,
-            color: otuIDs,
-            colorscale: "Rainbow"
+        var bubbleData = [{
+            x: otuIDs,
+            y: sampleValues,
+            text: otuLabels,
+            mode: "markers",
+            marker: {
+                size: sampleValues,
+                color: otuIDs,
+                colorscale: "Jet"
+            }
+        }];
+        var bubbleLayout = {
+            title: "<b>Bacteria Cultives Per Sample<>",
+                xaxis: {title: "OTU Id"},
+                automargin: true,
+                hovermode: "closest"
+        };
+        Plotly.newPlot("bubble", bubbleData, bubbleLayout);
+        gaugeDisplay(washFreq);
 
-        }
-    }];
-    var bubbleLayout = {
-        title: "Bacteria Cultives Per Sample",
-            xaxis: {title: "OTU Id"},
-            automargin: true,
-            hovermode: "closest"
-    };
-    Plotly.newPlot("bubble", bubbleData, bubbleLayout)
     });
+
+    
 }
+
+
 /*
 function barChart(){
   function addOTU(number){
