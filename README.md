@@ -1,5 +1,6 @@
 # belly-button-challenge
 The purpuse of this project is to demostrate the skills and knowledge acquired in the `interactive visualization` classes for Data Analytics Bootcamp. The project involves collecting, cleaning and analyzing data from `json api` unsing  `javaScript`. The project also showcases the of different tools and techniques. The project aims to provide insights and recommendations based on the data analysis.
+[belly-button](https://altesla.github.io/belly-button-challenge/)
 ![workingBrowser](https://github.com/AlTesla/belly-button-challenge/blob/main/workingBrowser.png?raw=true)
 ## Table of contents
 * belly-buttom-challaenge
