@@ -108,8 +108,5 @@ function plotCharts(sample){
         gaugeDisplay(washFreq);
 
     });
-
-    
+   
 }
-
-
